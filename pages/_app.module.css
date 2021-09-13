@@ -1,0 +1,54 @@
+.app {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  flex: 1 1 auto;
+}
+
+.logo {
+  margin: 8px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.logo svg {
+  fill: var(--almost-white);
+}
+
+.logo:hover svg {
+  fill: var(--magenta);
+}
+
+.logomark {
+  width: 64px;
+  height: 64px;
+  margin-right: 4px;
+}
+
+.wordmark {
+  width: 120px;
+  margin-bottom: 3px;
+}
+
+.footer {
+  padding: 24px;
+  opacity: 0.5;
+  margin: auto auto 0 auto;
+  font-size: 12px;
+  vertical-align: center;
+}
+
+.footer a {
+  text-decoration: underline;
+}
+
+.footerLine {
+  margin-top: 6px;
+}
+
+.vercelLogo {
+  margin: 0 6px;
+}

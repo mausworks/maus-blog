@@ -1,0 +1,44 @@
+.noBanner {
+  height: calc(var(--fat-title-height) * 2);
+}
+
+.wrapper {
+  position: relative;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.banner {
+  opacity: 0;
+  animation: fade-in 1500ms 200ms ease-in forwards;
+  height: 500px;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  mask-image: linear-gradient(transparent, #fff, transparent);
+}
+
+.originalSource {
+  color: var(--almost-white-50);
+  opacity: 0;
+  animation: fade-in 2000ms 1000ms ease-in forwards;
+  font-size: 12px;
+  font-family: 'Archivo Condensed';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 4px;
+  background: rgba(0, 0, 0, 0.75);
+  margin: 12px 24px;
+}
+
+.originalSource a {
+  text-decoration: underline;
+}
+
+.originalSource:hover {
+  opacity: 1;
+}

@@ -1,0 +1,216 @@
+---
+title: "GTA Vice City on Linux in 2021"
+description: "Playing GTA Vice City with a Nintendo Switch Pro controller on Linux in ultrawide."
+banner: "/img/vice-city-strip.png"
+bannerSource: "https://wallhaven.cc/w/qd6j1r"
+createdAt: "2021-09-12T19:38:48.981Z"
+---
+
+**Grant Theft Auto - Vice City** came out in October of 2002:
+This is so long ago that when I went back to proof read this post
+I realized that I had instead written "ten years ago", and then I had a minor aneurysm.
+
+_Either way &hellip;_
+
+Back in the olden days of 2002, Vice City was released for both Xbox & PlayStation&nbsp;2,
+and while it also had a release for both Windows&nbsp;&&nbsp;MacOS,
+both of these releases left a lot to be desired as quite a few graphical features
+and [some game mechanics were inexplicably cut from the game](https://www.youtube.com/watch?v=E-lbHYJ-cKI).  
+It is also worth noting that neither of the PC releases had any controller support.
+
+We're not going to let this stop us though,
+because while the game is now almost old enough to both legally drink and drive
+(hopefully not at the same time), it has not been forgotten by its passionate modding community!
+
+Before I get into the details of how to get this old nugget to run on your machine,
+I just want to point out how ridiculous all of this is&mdash;
+just as a recap if you haven't stopped to consider this yourself yet.
+
+> We are going to play a game on _unsupported hardware_,
+> using an _unsupported operating system_,
+> with an _unsupported controller from an unsupported console_,
+> in a resolution and aspect ratio that was _ridiculous at the time._ &hellip;
+>
+> _&hellip; and it will be absolutely glorious!_
+
+Rest assured: The game is going to run on your hardware, just as God intended.
+There are no emulators or other cheap tricks involved  
+&mdash; _it just works!_
+
+You can probably get this game running on any (somewhat modern) distro and potato,
+but for sake of comparison, here are my specs:
+
+```txt
+Kernel: 5.13.13-arch1-1
+CPU: AMD Ryzen 7 1800X (16)
+Memory: 8777MiB / 64235MiB
+Resolution: 3440x1440
+GPU: AMD ATI Radeon RX Vega 64
+Driver: amdgpu
+```
+
+I am also using Steam so I can leverage its great Proton support.
+
+## Getting the game to run
+
+Once you have installed the from Steam, you should download a
+[recent version of Proton GE (Glorious Eggroll)](https://github.com/GloriousEggroll/proton-ge-custom/releases/tag/6.16-GE-1).
+If you have yet to be blessed by the grace of the Eggroll, then most of what you need to know is that
+it is a tweaked version of Proton with some additional components and it often just magically solves your problems.
+
+> **Note:** While it is possible that the game _could_ run without Glorious Eggroll,
+> I wouldn't waste my time with even trying.
+
+I'm using `6.16-GE-1`, which is the latest version at the time of writing, but any recent version should work.
+All you have to do to get it to work with Steam is to download and unpack it to the Steam compatibility tools directory, like this:
+
+```sh
+cd "~/.steam/root/compatibilitytools.d"
+wget "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/6.16-GE-1/Proton-6.16-GE-1.tar.gz"
+tar xf "Proton-6.16-GE-1.tar.gz"
+rm "Proton-6.16-GE-1.tar.gz"
+```
+
+Once the files are on disk, restart Steam and force this version of proton under "Compatabilty" in the game preferences.
+The game _might_ start now, but I wouldn't even try just yet.
+
+### Getting some mods
+
+In order to get widescreen and controller support up and running,
+you need to get some mods from the aforementioned GTA modding community.
+
+You can get these mods individually, but since they are part of the fantastic
+[Vice City Definitive Edition mod pack](https://www.definitive-edition-project.com/vc-de),
+I highly suggest getting this instead as it will increase the game's overall graphical fidelity by including
+the previously mentioned "cut graphical features" on the PC platform.
+and by replacing many of the game's textures that have been AI upscaled (this is 2021 after all).
+It also includes unofficial patches that fixes many of the still remaining issues with the game.
+
+You probably want all of these mods if you are going to run this is in a higher resolution than what was intended for the game,
+but if you just want the widescreen and controller support, you can just get the "GInput"
+and "widescreen fix" mod&mdash; _but I highly suggest getting the mod pack instead_.
+
+To install this (and most other mods), simply extract the files to the Vice City game data directory&mdash; _it's that simple!_
+
+At this point you should try to start the game; heck, it might even run&mdash; great work! But the main point is to get Steam to set up the Wine prefix
+for the game, you probably also need to install some additional Windows components, just like me.
+
+### Installing additional Windows components
+
+There is [this guide on the Steam forums](https://steamcommunity.com/sharedfiles/filedetails/?id=706270825) that suggests installing
+The [Microsoft Visual C++ Redistributable Full Package](https://drive.google.com/file/d/1KMt5idVl_yIY6AoiyxlY6i8cbPCs5uTY/view)
+and the [DirectX End-User Runtimes](https://drive.google.com/file/d/1BiITyJT8wvBFzGbAchRlpF1khpp63Kni/view?usp=sharing),
+and installing these have indeed fixed most of my issues.
+
+The easiest way to install them is [via Protontricks](https://github.com/Matoking/protontricks)
+(but you can do so via vanilla Winetricks as well; you just have to specify the right prefix).
+
+I often just run `protontricks --gui`, as that way I don't have to remember (or look up) the Steam AppId for the game.
+Just select "Grand Theft Auto - Vice City" from the dialog that pops up&mdash; I mean _why make life hard?_
+
+Winetricks is far from the most user-friendly application,
+so unless you just graduated Wine school, this is how you install additional components in a Wine prefix.
+
+1. Run Protontricks (or Winetricks) and wait for something to happen
+1. Acknowledge that this is indeed a 64-bit prefix and wait for something to happen again
+1. Select "Select the default wineprefix" and hit "OK"
+1. Select "Run uninstaller" (yes, uninstaller) and hit "OK" again
+1. Hit the "Install..." button in the top right
+1. Browse to the folder which contains the installer and select "Programs (.exe)" next to "Files of type" at the bottom
+1. Hit "Open" and go through the installation wizard
+
+> **Note:** For the DirectX End-user Runtimes, the first installer will just extract some CAB-files and an installer.
+> I just extracted them to the desktop of this Wine prefix and then I ran the DXSETUP installer from there.
+
+Once you are done, close the "Uninstaller" dialog (the one with the Install button),
+then re-open it again and make sure that the list of programs now includes a whole bunch of C++ redistributables.
+
+At this point, the game should run without any problems!
+But if you are still experiencing issues, try setting the Windows version of the game to Windows XP in winecfg
+(you can run find winecfg in Protontricks as well). I have this set, but I honestly don't know if it makes a damn difference.
+
+After you have started the game, and make sure to make sure _max out all the settings_,
+and set the right resolution, then restart the game and make sure it all still works.
+
+If you're going ultrawide or if you plan are to use a controller, there are some additional tweaks we have to do!
+
+### Going ultrawide
+
+The "widescreen fix" mod assumes that you are going to run the game at 16:9 aspect ratio,
+but since we're going ultrawide we need to tweak the configuration for the mod.
+
+Navigate to your GTA Vice City game data folder and open `GTAVC.WidescreenFix.ini`
+in the `scripts` folder with your favorite editor.
+
+The settings we are interested in are the following:
+
+```ini
+; Set game aspect ratio (auto|4:3|5:4|16:9|*:*).
+ForceAspectRatio = 21:9
+; Used to properly scale frontend textures, such as menu background or >
+FrontendAspectRatio = 21:9
+```
+
+Then, I also scaled down the UI a little bit using these settings:
+
+```ini
+; The settings below are used to scale parts of the game UI differently.
+; If set to "0.0" original values will be used.
+HudWidthScale = 0.79     ; Original value is 1.0.
+HudHeightScale = 0.8    ; Original value is 1.0714285.
+```
+
+> **Note:** Unless you are feeling adventurous, make sure that you save this file with Windows Line Endings (CRLF).
+
+## Getting any controller to work
+
+First of all, we must make sure to completely disable controller support for the game within Steam.
+You can do this under the game preferences&mdash; and no; this is not a joke.
+
+The reason for doing this is that Steam is going to try to emulate controller support
+using keyboard strokes. Or at least that's how it seems to me, because with controller support enabled,
+I accelerate vehicles with "forward", instead of "A", and so on.
+
+I think that if you disable controller support in Steam then GInput takes over and handles it instead,
+The easiest way to do this in my opinion is to set the `WINEDELLOVERRIDES` launch options in Steam.
+
+```txt
+WINEDLLOVERRIDES="dinput8=n,b" %command%
+```
+
+Alternatively, you can enable this globally,
+see the ["Proton/Wine" setup instructions for GInput](https://cookieplmonster.github.io/setup-instructions/).
+
+## Using a Switch Pro Controller
+
+Steam already has great support for the Nintendo Switch Pro controller!
+So for most games, it just works.
+
+_Unfortunately_, this game does not have any official controller support
+(we just modded that in), so we need to get some stand-alone firmware and drivers in order to get that to work.
+
+To do this, your kernel has to support the `hid-nintendo` firmware,
+and newer kernels already have this built in, but you can add can add it if you don't already have it.
+
+To check if you have it installed, you can run `modinfo hid_nintendo`.
+The Arch Wiki of course has a [section for this on the Gamepad page](https://wiki.archlinux.org/title/Gamepad#Kernel_Nintendo_HID_Driver).
+
+You then [need to get `joycond`](https://github.com/DanielOgorchock/joycond).
+_Even if you already have this&mdash; you might have to update to a newer version because you need the "virtual controller" support._
+
+What this means, is that our controller is not going to identify as a Nintendo Switch Pro controller,
+but instead identify as a generic PC controller. This has _much better support with GInput_.
+
+On Arch Linx, you can simply install `joycond` from the AUR and enable the service:
+
+```sh
+yay -S joycond-git
+sudo systemctl enable joycond --now
+```
+
+Now (like with the other controllers), completely disable controller support for the game in Steam.
+
+Then, when you pair the controller, remember to hold the "plus" and "minus" buttons
+instead of the bumpers: This will pair the controller in _virtual mode_, making it identify as a generic game pad.
+
+Using this mode, the game even displayed the correct button names, I didn't have to Tweak any configuration!

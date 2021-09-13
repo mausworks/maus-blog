@@ -1,0 +1,92 @@
+:root {
+  --almost-white: #EFFFFD;
+  --almost-white-75: rgba(239, 255, 253, 0.75);
+  --almost-white-50: rgba(239, 255, 253, 0.50);
+  --almost-black: #080808;
+
+  --red: #BF0D24;
+  --bright-red: #D54D57;
+
+  --green: #09B575;
+  --bright-green: #37CE95;
+  --extra-bright-green: #48F9BB;
+
+  --blue: #1088EA;
+  --bright-blue: #4AB0F1;
+
+  --purple: #BA12ED;
+  --bright-purple: #D448FF;
+
+  --magenta: #CB0083;
+  --bright-magenta: #DD0072;
+  --extra-bright-magenta: #FF1F93;
+
+  --cyan: #11C3D0;
+  --bright-cyan: #3BD7E0;
+  --extra-bright-cyan: #5EE8D9;
+
+  --orange: #FFD500;
+  --bright-orange: #FFF152;
+
+  --dark-yellow: #B2B600;
+  --yellow: #DEDA12;
+  --bright-yellow: #FFFF22;
+  --extra-bright-yellow: #FDFD9B;
+
+  --fat-title-font-size: 55px;
+  --fat-title-height: calc(var(--fat-title-font-size) * 1.52);
+}
+
+html,
+body {
+  background-color: var(--almost-black);
+  color: var(--almost-white);
+  padding: 0;
+  margin: 0;
+  font-family: 'Archivo', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body, #__next {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::selection {
+  background: var(--bright-purple);
+  color: var(--almost-black);
+}
+
+*::-moz-selection {
+  background: var(--bright-purple);
+  color: var(--almost-black);
+}
+
+.fatTitle {
+  background-color: var(--almost-white);
+  color: var(--almost-black);
+  margin: 0;
+  padding: 12px 96px 12px 24px;
+  display: inline-block;
+  min-height: var(--fat-title-height);
+  font-size: var(--fat-title-font-size);
+  font-weight: 800;
+}
+
+.content {
+  margin: 0 auto;
+  padding: 0 2vh;
+  max-width: 1200px;
+  width: 100%;
+}
