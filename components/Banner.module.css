@@ -19,6 +19,19 @@
   background-position: center;
   background-size: cover;
   mask-image: linear-gradient(transparent, #fff, transparent);
+  transition: all 500ms ease;
+}
+
+@media (min-width: 1920px) {
+  .banner {
+    filter: blur(4px);
+  }
+}
+
+@media (min-width: 2560px) {
+  .banner {
+    filter: blur(6px);
+  }
 }
 
 .originalSource {
