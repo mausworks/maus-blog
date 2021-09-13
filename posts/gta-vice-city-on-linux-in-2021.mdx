@@ -6,36 +6,34 @@ bannerSource: "https://wallhaven.cc/w/qd6j1r"
 createdAt: "2021-09-12T19:38:48.981Z"
 ---
 
-**Grant Theft Auto - Vice City** came out in October of 2002:
+**Grand Theft Auto - Vice City** came out in October of 2002:
 This is so long ago that when I went back to proof read this post
 I realized that I had instead written "ten years ago", and then I had a minor aneurysm.
 
 _Either way &hellip;_
 
-Back in the olden days of 2002, Vice City was released for both Xbox & PlayStation&nbsp;2,
-and while it also had a release for both Windows&nbsp;&&nbsp;MacOS,
+Back in the olden days of 2002, Vice City was released on both Xbox & PlayStation&nbsp;2,
+and while it also had a release on both Windows&nbsp;&&nbsp;MacOS,
 both of these releases left a lot to be desired as quite a few graphical features
 and [some game mechanics were inexplicably cut from the game](https://www.youtube.com/watch?v=E-lbHYJ-cKI).  
 It is also worth noting that neither of the PC releases had any controller support.
 
-We're not going to let this stop us though,
-because while the game is now almost old enough to both legally drink and drive
-(hopefully not at the same time), it has not been forgotten by its passionate modding community!
+While the game is now almost old enough to both legally drink and drive
+(hopefully not at the same time), it has not yet been thrown out by the passionate modding community!
 
 Before I get into the details of how to get this old nugget to run on your machine,
-I just want to point out how ridiculous all of this is&mdash;
-just as a recap if you haven't stopped to consider this yourself yet.
+I just want to point out ridiculousness of all of this&mdash;
+just as a recap if you haven't stopped to ponder what we are about to do.
 
 > We are going to play a game on _unsupported hardware_,
 > using an _unsupported operating system_,
 > with an _unsupported controller from an unsupported console_,
-> in a resolution and aspect ratio that was _ridiculous at the time._ &hellip;
+> in a resolution and aspect ratio that was _ridiculous at the time_ &hellip;
 >
 > _&hellip; and it will be absolutely glorious!_
 
 Rest assured: The game is going to run on your hardware, just as God intended.
-There are no emulators or other cheap tricks involved  
-&mdash; _it just works!_
+There will be no emulators or other cheap tricks involved: _it just works!_
 
 You can probably get this game running on any (somewhat modern) distro and potato,
 but for sake of comparison, here are my specs:
@@ -43,7 +41,7 @@ but for sake of comparison, here are my specs:
 ```txt
 Kernel: 5.13.13-arch1-1
 CPU: AMD Ryzen 7 1800X (16)
-Memory: 8777MiB / 64235MiB
+Memory: 64235MiB
 Resolution: 3440x1440
 GPU: AMD ATI Radeon RX Vega 64
 Driver: amdgpu
@@ -207,8 +205,6 @@ On Arch Linx, you can simply install `joycond` from the AUR and enable the servi
 yay -S joycond-git
 sudo systemctl enable joycond --now
 ```
-
-Now (like with the other controllers), completely disable controller support for the game in Steam.
 
 Then, when you pair the controller, remember to hold the "plus" and "minus" buttons
 instead of the bumpers: This will pair the controller in _virtual mode_, making it identify as a generic game pad.
