@@ -4,6 +4,8 @@ import { basename, join } from "path";
 import grayMatter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import withShiki, { Options } from "./rehype-shiki";
+import { getHighlighter } from "./syntax-highlight";
 
 const POSTS_DIR = "./posts";
 
@@ -35,7 +37,7 @@ export async function loadPost(name: string): Promise<BlogPost> {
   const status = await fs.stat(path);
 
   if (!status.isFile()) {
-    throw new Error("The post is not a path.");
+    throw new Error("The post is not a file.");
   } else {
     const [meta, contents] = await serializePost(path);
 
@@ -78,8 +80,16 @@ type PostData = [Record<string, unknown>, PostContents];
 async function serializePost(path: string): Promise<PostData> {
   const rawPost = await readPost(path);
   const { content, data: frontMatter } = grayMatter(rawPost);
+  const highlighter = await getHighlighter();
 
-  return [frontMatter, await serialize(content)];
+  return [
+    frontMatter,
+    await serialize(content, {
+      mdxOptions: {
+        rehypePlugins: [[withShiki, { highlighter }]],
+      },
+    }),
+  ];
 }
 
 export async function listPosts() {

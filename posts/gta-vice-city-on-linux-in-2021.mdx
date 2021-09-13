@@ -1,7 +1,7 @@
 ---
 title: "GTA Vice City on Linux in 2021"
 description: "Playing GTA Vice City with a Nintendo Switch Pro controller on Linux in ultrawide."
-banner: "/img/vice-city-strip.png"
+banner: "/img/posts/vice-city-strip.png"
 bannerSource: "https://wallhaven.cc/w/qd6j1r"
 createdAt: "2021-09-12T19:38:48.981Z"
 ---
@@ -22,7 +22,7 @@ While the game is now almost old enough to both legally drink and drive
 (hopefully not at the same time), it has not yet been thrown out by the passionate modding community!
 
 But before we get into the details of how to get this old nugget to run on your machine,
-I just want to point out ridiculousness of all of this&mdash;
+I just want to point out ridiculousness of all of this—
 just as a recap if you haven't stopped to ponder what we are about to do.
 
 > We are going to play a game on _unsupported hardware_,
@@ -87,9 +87,9 @@ It also includes unofficial patches that fixes many of the still remaining issue
 You probably want all of these mods if you are going to run this is in a higher resolution than the game was designed for,
 but if you just want the widescreen and controller support, you can just get the "GInput" and "widescreen fix" mod.
 
-To install this (and most other mods), simply extract the files to the Vice City game data directory&mdash; _it's that simple!_
+To install this (and most other mods), simply extract the files to the Vice City game data directory— _it's that simple!_
 
-At this point you should try to start the game; heck, it might even run&mdash; great work!
+At this point you should try to start the game; heck, it might even run— great work!
 But the main point is to get Steam to set up the Wine prefix for the game.
 If the game starts: Just kill it, you probably also need to install some additional Windows components,
 to get it to run smoothly.
@@ -198,7 +198,7 @@ To check if you have it installed, you can run `modinfo hid_nintendo`.
 The Arch Wiki of course has a [section for this on the Gamepad page](https://wiki.archlinux.org/title/Gamepad#Kernel_Nintendo_HID_Driver).
 
 You then [need to get `joycond`](https://github.com/DanielOgorchock/joycond).
-_Even if you already have this&mdash; you might have to update to a newer version because you need the "virtual controller" support._
+_Even if you already have this— you might have to update to a newer version because you need the "virtual controller" support._
 
 What this means, is that our controller is not going to identify as a Nintendo Switch Pro controller,
 but instead identify as a generic PC controller. This has _much better support with GInput_.

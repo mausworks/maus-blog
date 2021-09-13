@@ -1,0 +1,259 @@
+---
+title: "Custom Syntax Highlighting in MDX"
+description: "Wouldn't it be sweet if I could use my Visual Studio Code theme for my blog? Yes—yes it would!"
+createdAt: "2021-09-13T18:14:01.158Z"
+---
+
+A few months ago I created my own [theme for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=mausworks.mausworks-theme-vscode),
+and yesterday I hacked together this blog using the same color palette, and today I thought that it would be pretty sweet if I can somehow use this theme for code examples here on the blog as well!
+
+> Since you are reading this in the future, you will immediately be able to glance whether I was successful or not, _how nice!_
+> But it's the journey that counts, _right_? Right—so come with me, and let's go on an adventure!
+
+This blog is built on NextJS (and TypeScript—because I am not insane),
+and I'm using `next-mdx-remote` to render markdown and I am really satisfied with
+how well all of this is working so far!
+
+However, at the time of writing, I am not doing anything special with the blog post serializer,
+for instance: The code blocks that are currently being generated on this blog
+does not allow me to apply any type of styling to individual keywords,
+as they are simple preformatted blocks using the HTML `pre` and `code` tags:
+
+```html
+<pre>
+  <code class="language-sh">
+    cd "~/.steam/root/compatibilitytools.d"
+    wget "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/6.16-GE-1/Proton-6.16-GE-1.tar.gz"
+    tar xf "Proton-6.16-GE-1.tar.gz"
+    rm "Proton-6.16-GE-1.tar.gz"
+  </code>
+</pre>
+```
+
+> _You can't do anything with this!_
+
+My current understanding about how the serializing works is that
+I pass some MDX syntax to the `serialize()` function;
+then _"it does something with it"_ and then it returns some props,
+which I pass on to the `MDXRemote` component and &hellip;
+
+![Magic](/gifs/magic.gif)
+
+So, it's clear that my understanding of the inner workings of this library is bad at best.
+
+## Understanding magic
+
+One of the things that I really like about TypeScript is that for as long as there are type definitions available,
+they can tell me most of what I need to know about the libraries I am interfacing with,
+without me ever having to leave my IDE.
+A quick look at some type definitions will tell me more about the library than
+I would learn from reading minutes of documentation.
+This is great, because I neither have the attention span or patience required to do that!
+
+So when I venture into the unknown, I like to start off by just glancing over the type signatures of
+the library that I am trying to implement. In this case I already know that it's in the `serialize`
+function where all the magic happens, and having a quick look at the parameters that it accepts
+is probably going to be a good starting point.
+
+So by going to the call site and hovering over the function name,
+I could immediately tell that it accepts options as an additional argument, this is already a great sign!
+
+![Serialize](/img/posts/2021-09-14-01-08-39.png)
+
+Having a deeper look at the options reveals this bad boy—it told me everything I ever needed to know!
+
+```ts
+export interface SerializeOptions {
+  scope?: Record<string, unknown>;
+  mdxOptions?: {
+    remarkPlugins?: Pluggable[];
+    rehypePlugins?: Pluggable[];
+    hastPlugins?: Pluggable[];
+    compilers?: Compiler[];
+    filepath?: string;
+  };
+  target?: string | string[];
+}
+```
+
+By just glancing at this, I now know that _A)_ this serializer is plugin based,
+and _B)_ that these plugins come in three flavors: "remark", "rehype", and "hast".
+Googling "rehype" tells me that this is part of the "unified collective",
+and checking out their [GitHub page](https://github.com/unifiedjs/unified)
+tells me this:
+
+> unified is an interface for processing text using syntax trees.
+> It’s what powers remark (Markdown), retext (natural language), and rehype (HTML),
+> and allows for processing between formats.
+
+Nice—so "remark plugins" are for Markdown and "rehype plugins" are for HTML, and what about "hast" then?
+Well just googling "hastPlugins" brings me to [an issue on the mdx-js GitHub page](https://github.com/mdx-js/mdx/issues/465)
+where it is explained that this is deprecated and superseded by the other two properties, great—this treasure hunt is officially over.
+
+Having a look at the [rehype plugins page](https://github.com/rehypejs/rehype/blob/main/doc/plugins.md),
+I can quickly determine that [`rehype-highlight`](https://github.com/rehypejs/rehype-highlight) is _probably_ what I am looking for.
+
+## Trying it out
+
+A quick `yarn add` and `import` later, and I'm ready to go!
+I definitely thought that this would do the trick:
+
+```ts
+await serialize(content, {
+  mdxOptions: { rehypePlugins: [rehypeHighlight] },
+});
+```
+
+But then I got a cryptic message from the type police:
+
+```txt
+Type '(options?: void | Options | undefined) => void | Transformer<Root, Root>' is not assignable to type 'Pluggable<[(Settings | undefined)?], Settings>'.
+  Type '(options?: void | Options | undefined) => void | Transformer<Root, Root>' is not assignable to type 'Plugin<[(Settings | undefined)?], Settings>'.
+    Type 'void | Transformer<Root, Root>' is not assignable to type 'void | Transformer'.
+      Type 'Transformer<Root, Root>' is not assignable to type 'void | Transformer'.
+        Type 'Transformer<Root, Root>' is not assignable to type 'Transformer'.
+          Types of parameters 'node' and 'node' are incompatible.
+            Property 'children' is missing in type 'Node<Data>' but required in type 'Root'.ts(2322)
+```
+
+> **Tip:** If you have not yet graduated TypeSchool, the first less you should learn is that the most vital
+> information in these messages are usually within the last few lines, even so in this case:
+>
+> ```txt
+> Property 'children' is missing in type 'Node<Data>' but required in type 'Root'.ts(2322)
+> ```
+>
+> If you need more context after reading the last line you can simply work your way up the messages.
+
+While I have always managed to maintain a good relationship with the type police, the MDX gang
+does not seem have been quite as fortunate. In this case there seems to be a type mismatch between
+the highlighting plugin and `mdx-js` itself—and this is something that _always_ upsets the type police, _deeply_.
+
+Looking into [the general usage of these plugins](https://github.com/mdx-js/mdx/blob/master/packages/mdx/index.js)
+within `mdx-js`, I can tell that this is _indeed_ how these plugins are supposed to be implemented.
+
+Now, I'll be the first to tell you—I _hate_ doing this—but it's time to serve up the gag ball:
+
+```ts
+await serialize(content, {
+  mdxOptions: { rehypePlugins: [rehypeHighlight as any] },
+});
+```
+
+And would you look at that—it works!
+
+```html
+<pre>
+  <code class="hljs language-sh">
+    <span class="hljs-built_in">cd</span>{" "}
+    <span class="hljs-string">"~/.steam/root/compatibilitytools.d"</span>
+    wget <span class="hljs-string">
+      "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/6.16-GE-1/Proton-6.16-GE-1.tar.gz"
+    </span>
+    tar xf <span class="hljs-string">"Proton-6.16-GE-1.tar.gz"</span>
+    rm <span class="hljs-string">"Proton-6.16-GE-1.tar.gz"</span>
+  </code>
+</pre>
+```
+
+## Adding color
+
+Now that the correct HTML syntax is being printed, I just need some way to convert my theme to
+`highlight.js`-compatible CSS classes.
+
+Luckily, I know that VSCode uses textmate grammars for their themes,
+and [as there are 242 styles available for the library](https://github.com/highlightjs/highlight.js/tree/main/src/styles)—I'll
+bet that there is some tooling that helps you auto-generate these.
+
+> After some digging it seems that [`highlight.js` is using their own "peculiar" grammars](https://github.com/highlightjs/highlight.js/issues/1513#issuecomment-300047311),
+> (their words, not mine) which means that this is not at all compatible with my theme _at all_.
+
+### Back to the drawing board for a second
+
+I'm thinking that there surely must be _some_ plugin that supports textmate grammars instead.
+
+And surely—there is! It's called [`rehype-shiki`](https://github.com/stefanprobst/rehype-shiki),
+it uses [`shiki`](https://github.com/shikijs/shiki) under the hood, and t _explicitly_ supports VSCode themes—this is just what I need!
+
+It does require some extra setup, however—because loading the "highlighter" has to be done in an async context,
+and the styling is not being done by CSS classes but instead by inline styles&mdash;which actually makes more sense,
+now that I think about it.
+
+It also seems that you can import themes from external GitHub URLs (which is cool),
+but for me it suffices if the theme is on disk. But some automation is always nice:
+
+```sh
+#!/bin/bash
+
+THEME_URL='https://raw.githubusercontent.com/mausworks/mausworks-theme-vscode/main/themes/Mausworks%20Night-color-theme.json'
+OUTPUT_PATH="./shiki-themes/mausworks-night.json"
+
+wget "$THEME_URL" -O "$OUTPUT_PATH"
+```
+
+Then it's just a matter of creating (and caching) the highlighter:
+
+```ts
+import shiki from "shiki";
+
+const options: shiki.HighlighterOptions = {
+  themes: ["mausworks-night"],
+  paths: { themes: "shiki-themes/" },
+  langs: ["ts", "tsx", "jsx", "js", "sh", "html", "css"],
+};
+
+let highlighter: shiki.Highlighter | null = null;
+
+export async function getHighlighter(): Promise<shiki.Highlighter> {
+  return (highlighter = highlighter || (await shiki.getHighlighter(options)));
+}
+```
+
+Now it should just be a matter of using this in the serializer:
+
+```ts
+const highlighter = await getHighlighter();
+
+await serialize(content, {
+  mdxOptions: {
+    rehypePlugins: [withShiki, { highlighter } as any],
+  },
+});
+```
+
+Aaaaaand!
+
+```
+import { raw as parse } from 'hast-util-raw'
+         ^^^
+SyntaxError: Named export 'raw' not found. The requested module 'hast-util-raw' is a CommonJS module, which may not support all module.exports as named exports.
+CommonJS modules can always be imported via the default export, for example using:
+```
+
+![facepalm](/gifs/picard-faceplam.gif)
+
+### When in doubt— hack it!
+
+I know that these issues sometimes appear simply because of version mismatches between packages,
+and in many cases this can send you down a very deep rabbit hole.
+But since this package contains just one JavaScript file (and one type definition),
+I'm just going to steal it (sorry, not sorry).
+
+Lo and behold! As I steal [the code from stefanprobst](https://github.com/stefanprobst/rehype-shiki) ,
+and as I paste it in my own project, I find an issue with an import:
+
+```ts
+import { visit } from "unist-util-visit";
+//       ^ 'visit' can only be imported by using a default import.
+```
+
+This is of course a different issue— but still an issue, fixing the import is of course dead simple:
+
+```ts
+import visit from "unist-util-visit";
+```
+
+And as soon as I hit save, NextJS refreshes my browser,
+and I can finally see it the syntax highlighting you've been looking at for the entirety of this blog post:
+
+![Beautiful](/gifs/beautiful.gif)

@@ -1,5 +1,5 @@
 .postContents {
-  color: var(--almost-white-75);
+  color: var(--almost-white-80);
   transform: translateY(calc(var(--fat-title-height) * -1));
   line-height: 180%;
   font-size: 18px;
@@ -48,10 +48,15 @@
   text-decoration-color: var(--cyan);
 }
 
+.postContents img {
+  margin: 48px auto;
+  display: block;
+}
+
 .postContents code {
   font-family: 'Source Code Pro', monospace;
   font-weight: 500;
-  color: var(--dark-yellow);
+  color: var(--sand);
   padding: 1px 4px;
 }
 
@@ -61,7 +66,8 @@
   font-size: 16px;
   font-weight: 500;
   border: 2px solid var(--bright-green);
-  margin: 24px -24px 12px -24px;
+  margin: 24px -24px 32px -24px;
+  border-radius: 6px;
   overflow: auto;
 }
 

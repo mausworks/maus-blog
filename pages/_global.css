@@ -1,5 +1,6 @@
 :root {
   --almost-white: #EFFFFD;
+  --almost-white-85: rgba(239, 255, 253, 0.80);
   --almost-white-75: rgba(239, 255, 253, 0.75);
   --almost-white-50: rgba(239, 255, 253, 0.50);
   --almost-black: #080808;
@@ -31,7 +32,7 @@
   --dark-yellow: #B2B600;
   --yellow: #DEDA12;
   --bright-yellow: #FFFF22;
-  --extra-bright-yellow: #FDFD9B;
+  --sand: #FDFD9B;
 
   --fat-title-font-size: 55px;
   --fat-title-height: calc(var(--fat-title-font-size) * 1.52);

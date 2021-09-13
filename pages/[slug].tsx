@@ -6,7 +6,7 @@ import {
 } from "next";
 import Head from "next/head";
 
-import { listPosts, loadPost, BlogPost } from "../post";
+import { listPosts, loadPost, BlogPost, PostMetadata } from "../post";
 import { Banner } from "../components/Banner";
 
 import styles from "./BlogPage.module.css";
@@ -15,21 +15,26 @@ type BlogParams = { slug: string };
 type StaticBlogContext = GetStaticPropsContext<BlogParams>;
 type StaticBlogProps = GetStaticPropsResult<BlogPost>;
 
+function BlogHead({ title, description, banner }: PostMetadata) {
+  return (
+    <Head>
+      <title>{title} - maus.lol</title>
+      <meta property="og:title" content={title} />
+      <meta property="og:type" content="article" />
+      <meta
+        property="og:description"
+        name="description"
+        content={description}
+      />
+      {banner && <meta property="og:image" content={banner} />}
+    </Head>
+  );
+}
+
 export default function BlogPage({ metadata, contents }: BlogPost) {
   return (
     <>
-      <Head>
-        <title>{metadata.title} - maus.lol</title>
-        <meta property="og:title" content={metadata.title} />
-        <meta
-          name="description"
-          property="og:description"
-          content={metadata.description}
-        />
-        {metadata.banner && (
-          <meta property="og:image" content={metadata.banner} />
-        )}
-      </Head>
+      <BlogHead {...metadata} />
 
       <article className={styles.page}>
         <Banner {...metadata} />
