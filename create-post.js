@@ -1,7 +1,5 @@
 const fs = require("fs/promises");
 
-const date = new Date();
-
 const args = process.argv.slice(2);
 const title = args[0];
 
