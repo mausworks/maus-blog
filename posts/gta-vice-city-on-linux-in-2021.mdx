@@ -15,13 +15,13 @@ _Either way &hellip;_
 Back in the olden days of October 2002, the game was released on both Xbox & PlayStation&nbsp;2,
 and while it also had a release on both Windows&nbsp;&&nbsp;MacOS,
 both of these releases left a lot to be desired as quite a few graphical features
-and [some game mechanics were inexplicably cut from the game](https://www.youtube.com/watch?v=E-lbHYJ-cKI).  
+and [some game mechanics were inexplicably cut from the game](https://www.youtube.com/watch?v=E-lbHYJ-cKI).
 It is also worth noting that neither of the PC releases had any controller support.
 
 While the game is now almost old enough to both legally drink and drive
 (hopefully not at the same time), it has not yet been thrown out by the passionate modding community!
 
-Before I get into the details of how to get this old nugget to run on your machine,
+But before we get into the details of how to get this old nugget to run on your machine,
 I just want to point out ridiculousness of all of this&mdash;
 just as a recap if you haven't stopped to ponder what we are about to do.
 
@@ -47,20 +47,20 @@ GPU: AMD Radeon RX Vega 64
 Driver: amdgpu
 ```
 
-I am also using Steam so I can leverage its great Proton support.
+I am also using the Steam version so I can leverage its great Proton support.
 
 ## Getting the game to run
 
 Once you have installed the from Steam, you should download a
-[recent version of Proton GE (Glorious Eggroll)](https://github.com/GloriousEggroll/proton-ge-custom/releases/tag/6.16-GE-1).
+[recent version of Proton GE (Glorious Eggroll)](https://github.com/GloriousEggroll/proton-ge-custom/releases/).
 If you have yet to be blessed by the grace of the Eggroll, then most of what you need to know is that
 it is a tweaked version of Proton with some additional components that often just magically solves your problems.
 
 > **Note:** While it is possible that the game _could_ run without Glorious Eggroll,
 > I wouldn't waste my time with even trying.
 
-I'm using `6.16-GE-1`, which is the latest version at the time of writing, but any recent version should work.
-All you have to do to get it to work with Steam is to download and unpack it to the Steam compatibility tools directory, like this:
+I'm using `6.16-GE-1`, which is the latest version at the time of writing, but any recent version should do the trick.
+All you have to do to get it working with Steam is to download and unpack it to the Steam compatibility tools directory, like this:
 
 ```sh
 cd "~/.steam/root/compatibilitytools.d"
@@ -69,8 +69,8 @@ tar xf "Proton-6.16-GE-1.tar.gz"
 rm "Proton-6.16-GE-1.tar.gz"
 ```
 
-Once the files are on disk, restart Steam and force this version of proton under "Compatabilty" in the game preferences.
-The game _might_ start now, but I wouldn't even try just yet.
+Once these files are on disk, restart Steam and force this version of proton under "Compatabilty" in the game preferences.
+The game _might_ start now, but we're far from done here.
 
 ### Getting some mods
 
@@ -80,18 +80,19 @@ you need to get some mods from the aforementioned GTA modding community.
 You can get these mods individually, but since they are part of the fantastic
 [Vice City Definitive Edition mod pack](https://www.definitive-edition-project.com/vc-de),
 I highly suggest getting this instead as it will increase the game's overall graphical fidelity by including
-the previously mentioned "cut graphical features" on the PC platform.
-and by replacing many of the game's textures that have been AI upscaled (this is 2021 after all).
+the previously mentioned "cut graphical features" on the PC platform,
+and by replacing many of the game's textures with ones that have been AI upscaled (this is 2021 after all).
 It also includes unofficial patches that fixes many of the still remaining issues with the game.
 
-You probably want all of these mods if you are going to run this is in a higher resolution than what was intended for the game,
-but if you just want the widescreen and controller support, you can just get the "GInput"
-and "widescreen fix" mod&mdash; _but I highly suggest getting the mod pack instead_.
+You probably want all of these mods if you are going to run this is in a higher resolution than the game was designed for,
+but if you just want the widescreen and controller support, you can just get the "GInput" and "widescreen fix" mod.
 
 To install this (and most other mods), simply extract the files to the Vice City game data directory&mdash; _it's that simple!_
 
-At this point you should try to start the game; heck, it might even run&mdash; great work! But the main point is to get Steam to set up the Wine prefix
-for the game, you probably also need to install some additional Windows components, just like me.
+At this point you should try to start the game; heck, it might even run&mdash; great work!
+But the main point is to get Steam to set up the Wine prefix for the game.
+If the game starts: Just kill it, you probably also need to install some additional Windows components,
+to get it to run smoothly.
 
 ### Installing additional Windows components
 
@@ -104,7 +105,7 @@ The easiest way to install them is [via Protontricks](https://github.com/Matokin
 (but you can do so via vanilla Winetricks as well; you just have to specify the right prefix).
 
 I often just run `protontricks --gui`, as that way I don't have to remember (or look up) the Steam AppId for the game.
-Just select "Grand Theft Auto - Vice City" from the dialog that pops up&mdash; I mean _why make life hard?_
+Just select "Grand Theft Auto - Vice City" from the dialog that pops up: _I mean why make life hard?_
 
 Winetricks is far from the most user-friendly application,
 so unless you just graduated Wine school, this is how you install additional components in a Wine prefix.
@@ -125,10 +126,10 @@ then re-open it again and make sure that the list of programs now includes a who
 
 At this point, the game should run without any problems!
 But if you are still experiencing issues, try setting the Windows version of the game to Windows XP in winecfg
-(you can run find winecfg in Protontricks as well). I have this set, but I honestly don't know if it makes a damn difference.
+(you can run winecfg from Protontricks as well). I have this set, but I honestly don't know if it makes a damn difference.
 
-After you have started the game, and make sure to make sure _max out all the settings_,
-and set the right resolution, then restart the game and make sure it all still works.
+After you have started the game, and made sure _max out all the settings_ and set the right resolution,
+you should restart the game just to make sure it all still works.
 
 If you're going ultrawide or if you plan are to use a controller, there are some additional tweaks we have to do!
 
@@ -136,6 +137,7 @@ If you're going ultrawide or if you plan are to use a controller, there are some
 
 The "widescreen fix" mod assumes that you are going to run the game at 16:9 aspect ratio,
 but since we're going ultrawide we need to tweak the configuration for the mod.
+If we don't do this everything in the game will be _thicc._
 
 Navigate to your GTA Vice City game data folder and open `GTAVC.WidescreenFix.ini`
 in the `scripts` folder with your favorite editor.
@@ -158,12 +160,14 @@ HudWidthScale = 0.79     ; Original value is 1.0.
 HudHeightScale = 0.8    ; Original value is 1.0714285.
 ```
 
+If you start the game now, everything should be a lot less stretched.
+
 > **Note:** Unless you are feeling adventurous, make sure that you save this file with Windows Line Endings (CRLF).
 
 ## Getting any controller to work
 
-First of all, we must make sure to completely disable controller support for the game within Steam.
-You can do this under the game preferences&mdash; and no; this is not a joke.
+First of all, we must make sure to completely disable controller support for the game within Steam (I'm dead serious),
+you can do this under the game preferences for Vice City.
 
 The reason for doing this is that Steam is going to try to emulate controller support
 using keyboard strokes. Or at least that's how it seems to me, because with controller support enabled,
