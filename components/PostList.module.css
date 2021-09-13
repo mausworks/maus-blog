@@ -10,7 +10,9 @@
 }
 
 .item:hover {
-  color: var(--extra-bright-magenta);
+  border-top-color: var(--bright-magenta);
+  background-color: var(--bright-magenta);
+  color: var(--almost-black);
 }
 
 .title {
@@ -29,7 +31,7 @@
 .date {
   font-family: 'Archivo Narrow';
   margin-bottom: 12px;
-  font-size: 12px;
+  font-size: 13px;
   margin-left: 12px;
-  opacity: 0.5;;
+  opacity: 0.6;
 }

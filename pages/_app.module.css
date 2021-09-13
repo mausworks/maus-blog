@@ -19,7 +19,7 @@
 }
 
 .logo:hover svg {
-  fill: var(--magenta);
+  fill: var(--bright-magenta);
 }
 
 .logomark {
