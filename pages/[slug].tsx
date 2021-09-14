@@ -6,7 +6,7 @@ import {
 } from "next";
 import Head from "next/head";
 
-import { listPosts, loadPost, BlogPost, PostMetadata } from "../post";
+import { listPosts, loadPost, BlogPost, PostMetadata } from "../lib/post";
 import { Banner } from "../components/Banner";
 
 import styles from "./BlogPage.module.css";

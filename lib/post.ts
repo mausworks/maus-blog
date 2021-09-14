@@ -4,7 +4,7 @@ import { basename, join } from "path";
 import grayMatter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import withShiki, { Options } from "./rehype-shiki";
+import withShiki from "./rehype-shiki";
 import { getHighlighter } from "./syntax-highlight";
 
 const POSTS_DIR = "./posts";

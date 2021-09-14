@@ -1,6 +1,6 @@
 import type { GetStaticPropsResult, NextPage } from "next";
 import Head from "next/head";
-import { latestPosts, PostMetadata } from "../post";
+import { latestPosts, PostMetadata } from "../lib/post";
 import PostList from "../components/PostList";
 
 import styles from "./index.module.css";

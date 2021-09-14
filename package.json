@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "update-vscode-theme": "bash ./scripts/update-vscode-theme.sh",
+    "update-code-theme": "node ./scripts/update-code-theme.mjs",
     "create-post": "node ./scripts/create-post.js"
   },
   "dependencies": {
@@ -25,6 +25,8 @@
     "@types/react": "17.0.20",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
+    "node-fetch": "^3.0.0",
+    "strip-json-comments": "^4.0.0",
     "typescript": "4.4.3"
   }
 }

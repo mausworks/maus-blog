@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CSSProperties } from "react";
-import { PostMetadata } from "../post";
+import { PostMetadata } from "../lib/post";
 
 import styles from "./Banner.module.css";
 

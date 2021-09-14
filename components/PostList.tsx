@@ -1,6 +1,6 @@
 import relative from "date-fns/formatRelative";
 import iso from "date-fns/formatISO";
-import { PostMetadata } from "../post";
+import { PostMetadata } from "../lib/post";
 import Link from "next/link";
 
 import styles from "./PostList.module.css";
