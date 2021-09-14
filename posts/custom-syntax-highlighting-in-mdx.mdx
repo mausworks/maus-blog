@@ -221,11 +221,11 @@ await serialize(content, {
 
 Aaaaaand!
 
-```
-import { raw as parse } from 'hast-util-raw'
-         ^^^
-SyntaxError: Named export 'raw' not found. The requested module 'hast-util-raw' is a CommonJS module, which may not support all module.exports as named exports.
-CommonJS modules can always be imported via the default export, for example using:
+```ts
+import { raw as parse } from "hast-util-raw";
+//       ^^^
+// SyntaxError: Named export 'raw' not found. The requested module 'hast-util-raw' is a CommonJS module, which may not support all module.exports as named exports.
+// CommonJS modules can always be imported via the default export, for example using:
 ```
 
 ![facepalm](/gifs/picard-faceplam.gif)
@@ -245,13 +245,14 @@ import { visit } from "unist-util-visit";
 //       ^ 'visit' can only be imported by using a default import.
 ```
 
-This is of course a different issue— but still an issue, fixing the import is of course dead simple:
+The readers with sharp eyes will likely notice that this is a different error—
+but still an issue, fixing the import is of course dead simple:
 
 ```ts
 import visit from "unist-util-visit";
 ```
 
 And as soon as I hit save, NextJS refreshes my browser,
-and I can finally see it the syntax highlighting you've been looking at for the entirety of this blog post:
+and I can finally see it the syntax highlighting you've been looking at for the entirety of this blog post.
 
 ![Beautiful](/gifs/beautiful.gif)
