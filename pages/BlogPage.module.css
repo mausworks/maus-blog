@@ -51,6 +51,7 @@
 .postContents img {
   margin: 48px auto;
   display: block;
+  max-width: 100%;
 }
 
 .postContents code {
