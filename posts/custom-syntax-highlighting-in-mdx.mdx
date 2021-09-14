@@ -45,9 +45,7 @@ So, it's clear that my understanding of the inner workings of this library is ba
 
 One of the things that I really like about TypeScript is that for as long as there are type definitions available,
 they can tell me most of what I need to know about the libraries I am interfacing with,
-without me ever having to leave my IDE.
-A quick look at some type definitions will tell me more about the library than
-I would learn from reading minutes of documentation.
+without me ever having to leave my IDE, this can save me minutes of reading documentation.
 This is great, because I neither have the attention span or patience required to do that!
 
 So when I venture into the unknown, I like to start off by just glancing over the type signatures of
@@ -116,8 +114,8 @@ Type '(options?: void | Options | undefined) => void | Transformer<Root, Root>' 
             Property 'children' is missing in type 'Node<Data>' but required in type 'Root'.ts(2322)
 ```
 
-> **Tip:** If you have not yet graduated TypeSchool, the first less you should learn is that the most vital
-> information in these messages are usually within the last few lines, even so in this case:
+> **Tip:** If you have not yet graduated TypeSchool, the first lesson you should learn is that the most vital
+> information in these messages are usually hidden within the last few lines, even so in this case:
 >
 > ```txt
 > Property 'children' is missing in type 'Node<Data>' but required in type 'Root'.ts(2322)
