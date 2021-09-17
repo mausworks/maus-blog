@@ -5,6 +5,7 @@ import {
   GetStaticPathsResult,
 } from "next";
 import Head from "next/head";
+import { Poll } from "../components/Poll";
 
 import { listPosts, loadPost, BlogPost, PostMetadata } from "../lib/post";
 import { Banner } from "../components/Banner";
@@ -52,7 +53,7 @@ export default function BlogPage({ metadata, contents }: BlogPost) {
           <div className={styles.postContents}>
             <p className={styles.description}>{metadata.description}</p>
 
-            <MDXRemote {...contents} />
+            <MDXRemote {...contents} components={{ Poll }} />
           </div>
         </div>
       </article>

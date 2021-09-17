@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@stefanprobst/rehype-shiki": "^2.0.4",
+    "@types/classnames": "^2.3.1",
+    "classnames": "^2.3.1",
     "date-fns": "^2.23.0",
     "gray-matter": "^4.0.3",
     "next": "11.1.2",

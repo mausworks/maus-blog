@@ -52,6 +52,7 @@
   margin: 48px auto;
   display: block;
   max-width: 100%;
+  border-radius: 3%;
 }
 
 .postContents code {

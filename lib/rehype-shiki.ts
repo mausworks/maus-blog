@@ -1,7 +1,8 @@
-import { Highlighter } from "shiki";
 import { raw } from "hast-util-raw";
 import { toString } from "hast-util-to-string";
+import { Parent } from "unist";
 import { Element, Node } from "hast";
+import { Highlighter } from "shiki";
 import visit from "unist-util-visit";
 
 export interface ShikiPluginOptions {
@@ -13,7 +14,7 @@ type ClassLike = null | string | number | boolean | Array<string | number>;
 export default function attach({ highlighter }: ShikiPluginOptions) {
   const langs: string[] = highlighter.getLoadedLanguages();
 
-  const visitor = (node: Element, _: number, parentNode?: Node) => {
+  const visitor = (node: Element, _index: number, parentNode?: Parent) => {
     const parent = asElement(parentNode);
 
     if (!parent) {
@@ -31,7 +32,7 @@ export default function attach({ highlighter }: ShikiPluginOptions) {
     }
   };
 
-  return (tree: Element) => visit<Element>(tree, [isElement], visitor);
+  return (tree: Element) => visit(tree, [isElement], visitor);
 }
 
 const toClassList = (input?: ClassLike): string[] => {

@@ -1,0 +1,81 @@
+.poll {
+  position: relative;
+  
+}
+
+.options {
+  list-style: none;
+  margin: 0 0 0 12px;
+  padding: 0;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.option::before {
+  --color: var(--almost-white);
+  flex: 0 0 12px;
+  content: " ";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 18px;
+  border-radius: 100%;
+  border: 2px solid var(--color);
+}
+
+.answered .option {
+  opacity: 0.2;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.option:hover::before,
+.answered .selected.option::before {
+  background-color: var(--color);
+}
+
+.answered .selected.option {
+  color: var(--red);
+  opacity: 1;
+}
+
+.answered.correct .selected.option {
+  text-decoration: none;
+  color: var(--green);
+  opacity: 1;
+}
+
+.answered.correct .option.selected::before {
+  --color: var(--green);
+}
+
+.required::after {
+  content: " ";
+  display: block;
+  height: 150px;
+  left: -2vw;
+  width: calc(100% + 4vw);
+  position: absolute;
+  opacity: 1;
+  background: linear-gradient(var(--almost-black), 80%, transparent);
+  z-index: 2;
+  transition: all 1s ease-in;
+}
+
+.required.answered::after {
+  opacity: 0;
+  height: 0;
+}
+
+.required ~ * {
+  filter: blur(10px);
+  transition: filter 1s ease-in;
+}
+
+.required.answered ~ *  {
+  filter: blur(0);
+}
