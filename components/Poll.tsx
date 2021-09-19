@@ -16,21 +16,21 @@ export type PollProps = {
 export function Poll({
   options,
   correctResponse = "Correct!",
-  wrongResponse = "Wrong",
+  wrongResponse = "Wrong!",
   required = false,
 }: PollProps) {
   const [answer, setAnswer] = useState<string>();
   const correct = !!answer && options[answer];
+
+  if (!options) {
+    return null;
+  }
 
   const className = classNames(styles.poll, {
     [styles.required]: required,
     [styles.answered]: answer,
     [styles.correct]: correct,
   });
-
-  if (!options) {
-    return null;
-  }
 
   return (
     <div className={className}>
