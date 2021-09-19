@@ -48,7 +48,7 @@ return transformer;
 <Poll
   required={true}
   wrongResponse="Nope! Apparently not."
-  correctResponse="Yep! You knew this was a trick question, didn't you?"
+  correctResponse="Yes! But why would you pick this option?"
   options={{
     "Before this function": false,
     "After this function": false,
@@ -58,7 +58,7 @@ return transformer;
 />
 
 Writing code like this is called _[hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)_,
-and it has some very good use-cases&mdash;_but this definitely isn't one of them!_
+and it has some very good use-cases&mdash;_but I do not think that this is one of them!_
 
 My reasoning for this is simple, because defining something _after_ a return statement looks a whole lot like unreachable code,
 and the reader will I have to stop with whatever they are doing to interpret what is actually going on!
@@ -234,3 +234,5 @@ export type Element = import("hast").Element;
 ```
 
 So now we know that these types can be imported from `hast` directly!
+
+The only thing that remains now is figuring out the signature of the `visitor` function.

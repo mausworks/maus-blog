@@ -1,9 +1,8 @@
 import { raw } from "hast-util-raw";
 import { toString } from "hast-util-to-string";
-import { Parent } from "unist";
 import { Element, Node } from "hast";
 import { Highlighter } from "shiki";
-import visit from "unist-util-visit";
+import { visit, Visitor } from "unist-util-visit";
 
 export interface ShikiPluginOptions {
   highlighter: Highlighter;
@@ -14,25 +13,26 @@ type ClassLike = null | string | number | boolean | Array<string | number>;
 export default function attach({ highlighter }: ShikiPluginOptions) {
   const langs: string[] = highlighter.getLoadedLanguages();
 
-  const visitor = (node: Element, _index: number, parentNode?: Parent) => {
+  const visitor: Visitor<Node> = (node, _index, parentNode) => {
+    const element = asElement(node);
     const parent = asElement(parentNode);
 
-    if (!parent) {
+    if (!element || !parent) {
       return;
     }
 
-    const lang = getLang(node);
+    const lang = getLang(element);
 
     if (lang && langs.includes(lang)) {
-      const html = highlighter.codeToHtml(toString(node), lang);
-      const code = raw({ type: "raw", value: html }) as Element;
+      const html = highlighter.codeToHtml(toString(element), lang);
+      const generated = raw({ type: "raw", value: html }) as Element;
 
-      parent.properties = code.properties;
-      parent.children = code.children;
+      parent.properties = generated.properties;
+      parent.children = generated.children;
     }
   };
 
-  return (tree: Element) => visit(tree, [isElement], visitor);
+  return (tree: Element) => visit(tree, "element", visitor);
 }
 
 const toClassList = (input?: ClassLike): string[] => {
@@ -45,9 +45,9 @@ const toClassList = (input?: ClassLike): string[] => {
   }
 };
 
-const isElement = (node?: Node) => node?.type === "element";
+const isElement = (node?: Node | null) => node?.type === "element";
 
-const asElement = (node?: Node) =>
+const asElement = (node?: Node | null) =>
   (isElement(node) && (node as Element)) || null;
 
 function getLang({ properties, tagName }: Element): string | null {
