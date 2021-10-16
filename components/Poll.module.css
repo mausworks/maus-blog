@@ -1,6 +1,5 @@
 .poll {
   position: relative;
-  
 }
 
 .options {
@@ -10,18 +9,23 @@
 }
 
 .option {
+  --color: var(--almost-white);
+
+  color: var(--color);
   display: flex;
   align-items: center;
   cursor: pointer;
+  padding: 3px 0;
+  font-weight: 500;
+  font-family: var(--narrow-font-family);
 }
 
 .option::before {
-  --color: var(--almost-white);
-  flex: 0 0 12px;
+  flex: 0 0 auto;
   content: " ";
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 15px;
+  height: 15px;
   margin-right: 18px;
   border-radius: 100%;
   border: 2px solid var(--color);
@@ -33,24 +37,34 @@
   text-decoration-thickness: 2px;
 }
 
+.answered .option::before {
+  background-color: transparent;
+}
+
 .option:hover::before,
 .answered .selected.option::before {
   background-color: var(--color);
 }
 
 .answered .selected.option {
+  text-decoration: none;
   color: var(--red);
   opacity: 1;
 }
 
-.answered.correct .selected.option {
-  text-decoration: none;
+.answered.correct .selected.option,
+.answered.wrong .option.correctAnswer {
   color: var(--green);
   opacity: 1;
 }
 
-.answered.correct .option.selected::before {
+.answered.correct .option.selected::before,
+.answered.wrong .option.correctAnswer::before {
   --color: var(--green);
+}
+
+.answered.wrong .option.selected::before {
+  --color: var(--red);
 }
 
 .required::after {
@@ -63,7 +77,7 @@
   opacity: 1;
   background: linear-gradient(var(--almost-black), 80%, transparent);
   z-index: 2;
-  transition: all 1s ease-in;
+  transition: all 1s ease-out;
 }
 
 .required.answered::after {
@@ -73,9 +87,38 @@
 
 .required ~ * {
   filter: blur(10px);
-  transition: filter 1s ease-in;
+  transition: filter 1s ease-out;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-.required.answered ~ *  {
+.required.answered ~ * {
   filter: blur(0);
+  user-select: auto;
+}
+
+.response {
+  transition: all 500ms ease-out;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  margin: 12px 0 18px 0;
+  padding: 0 36px;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 6px;
+  opacity: 0;
+  color: var(--background-color);
+}
+
+.answered .response {
+  opacity: 1;
+}
+
+.answered.wrong .response {
+  background-color: var(--red);
+}
+
+.answered.correct .response {
+  background-color: var(--green);
 }
