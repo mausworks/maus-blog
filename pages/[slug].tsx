@@ -10,7 +10,7 @@ import { Poll } from "../components/Poll";
 import { listPosts, loadPost, BlogPost, PostMetadata } from "../lib/post";
 import { Banner } from "../components/Banner";
 
-import styles from "./BlogPage.module.css";
+import styles from "./[slug].module.css";
 
 type BlogParams = { slug: string };
 type StaticBlogContext = GetStaticPropsContext<BlogParams>;
