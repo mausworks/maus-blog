@@ -2,7 +2,7 @@ import { raw } from "hast-util-raw";
 import { toString } from "hast-util-to-string";
 import { Element, Node } from "hast";
 import { Highlighter } from "shiki";
-import visit, { Visitor } from "unist-util-visit";
+import { visit, Visitor } from "unist-util-visit";
 
 export interface ShikiPluginOptions {
   highlighter: Highlighter;
