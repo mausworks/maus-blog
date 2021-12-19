@@ -86,7 +86,7 @@ async function serializePost(path: string): Promise<PostData> {
     frontMatter,
     await serialize(content, {
       mdxOptions: {
-        rehypePlugins: [[withShiki, { highlighter }]],
+        rehypePlugins: [[withShiki as any, { highlighter }]],
       },
     }),
   ];
