@@ -12,12 +12,12 @@ export default function Home({ latest }: HomeProps) {
   return (
     <div className="content">
       <Head>
-        <title>maus - latest posts</title>
-        <meta name="description" content="My latest posts" />
+        <title>maus · posts</title>
+        <meta name="description" content="Long obtuse litanies" />
       </Head>
 
       <div className={styles.content}>
-        <h1 className="fatTitle">Latest posts</h1>
+        <h1 className="fatTitle">Long obtuse litanies</h1>
 
         <PostList posts={latest} />
       </div>
