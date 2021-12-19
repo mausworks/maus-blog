@@ -1,0 +1,17 @@
+{
+  "files": {
+    "**/setupTests.*": "camelCase.lc",
+    "**/reportWebVitals.ts": "camelCase.lc",
+    "**/index.*": "kebab-case.lc",
+    "**/pages/*.{tsx,css}": "kebab-case.lc",
+    "**/*.{tsx,jsx,css,scss,sass}": "PascalCase.kebab-case.lc",
+    "**/README*": "UPPER CASE.lc",
+    "**/LICENSE*": "UPPER CASE.lc",
+    "**/Dockerfile*": "PascalCase.lc",
+    "**/Procfile*": "PascalCase.lc",
+    "**/*": "kebab-case.lc"
+  },
+  "folders": {
+    "**/*": "kebab-case.lc"
+  }
+}
