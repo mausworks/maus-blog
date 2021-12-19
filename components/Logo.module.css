@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  flex-direction: column;
+}
+.logo {
+  margin: 8px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.logo svg {
+  fill: var(--almost-white);
+}
+
+.logo:hover svg {
+  fill: var(--bright-magenta);
+}
+
+.logomark {
+  width: 64px;
+  height: 64px;
+  margin-right: 4px;
+}
+
+.wordmark {
+  width: 120px;
+  margin-bottom: 3px;
+}
