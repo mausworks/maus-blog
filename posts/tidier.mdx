@@ -1,0 +1,26 @@
+---
+title: "Tidier, a project linter"
+description: "Why isn't there a linter for a file and folder names?"
+createdAt: "2021-12-31T09:59:33.852Z"
+---
+
+Consistency is bliss&mdash;and linters such as ESLint and formatters such as ESLint quickly proved that
+once they became the de-facto standard for defining code standards for many software development projects.
+
+In my opinion; tools such as these have revolutionized the industry, 
+seeing as they have swiftly ended disagreements on how code should be formatted,
+so we can focus on more important disagreements such as if a boolean really must always start with "is",
+or whether concise or exhaustive variable names are better.
+
+Jokes aside, I think the fact of the matter is that people often disagree with each other,
+but they seldom seem to disagree with their toolset, especially if said tools _also fixes the code_.
+
+Sure&mdash;I can disagree with a code formatting rule. But once fixes are applied 
+(either by a pre-commit hook, or by "format on save"), I no longer care: and I think most developers share this sentiment.
+
+Since I started working in a large software development project, within a very large monorepo,
+I quickly noticed something: We have consistent code style across most projects within this repository,
+but the way we name files and folders is _highly inconsistent, sometimes even within the same project_,
+and being a highly meticulous individual, I wanted to immerse myself in this problem space to see if I can do something about it.
+
+The result of this adventure is Tidier&mdash;a project linter and formatter.
