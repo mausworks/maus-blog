@@ -20,5 +20,5 @@ createdAt: "${new Date().toISOString()}"
 (async () => {
   await fs.writeFile(`./posts/${slug}.mdx`, frontMatter, "utf-8");
 
-  console.log(`Page '${title}'' created!!`);
+  console.log(`Page '${title}' created!`);
 })();
